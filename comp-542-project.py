@@ -1,9 +1,10 @@
 import pandas
 from sklearn.feature_selection import r_regression
-# from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 # from sklearn.metrics import f1_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import cross_validate
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -34,5 +35,10 @@ scaler = MinMaxScaler()
 scaler.fit(X)
 X_scaled = scaler.transform(X)
 print(X_scaled)
+
+# Cross-validation:
+rfc = RandomForestClassifier()
+result = cross_validate(rfc, X_scaled, y)
+print(result['test_score'])
 
 print("all done!")

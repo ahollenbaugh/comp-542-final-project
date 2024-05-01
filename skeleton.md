@@ -23,17 +23,17 @@
 15. Take the union of sets C_j* and C_k*
 
 ### Data Scaling Stage
-1. Apply MinMaxScaler to the processed dataset (in this case, the data for each feature is scaled to a value between 0 and 1 -- this prevents underflow and overflow when learning from experimental data)
+1. ~~Apply MinMaxScaler to the processed dataset (in this case, the data for each feature is scaled to a value between 0 and 1 -- this prevents underflow and overflow when learning from experimental data)~~
 
 ### K-Fold Cross Validation Stage
-1. Select a model
-    - general ML algorithm provided by scikit-learn
-    - random forest (highest prediction accuracy overall)
-    - decision tree
-    - k-nearest neighbors classifier
-    - gradient boosting classifier
-    - extra tree classifier (shortest learning time)
-    - bagging classifier
+1. ~~Select a model~~
+    - ~~general ML algorithm provided by scikit-learn~~
+    - ~~random forest (highest prediction accuracy overall)~~
+    - ~~decision tree~~
+    - ~~k-nearest neighbors classifier~~
+    - ~~gradient boosting classifier~~
+    - ~~extra tree classifier (shortest learning time)~~
+    - ~~bagging classifier~~
 2. Create a subset of the dataset, which we'll call D_ifs, where any features deemed irrelevant by IFS are filtered out
 3. For 1 <= k <= N, where k now represents the number of folds:
     - Select 1/kth of D_ifs
