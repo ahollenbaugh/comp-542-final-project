@@ -1,6 +1,6 @@
 # Code Skeleton
 ### IFS Stage
-1. Read in the dataset file
+1. ~~Read in the dataset file~~
 2. Create a list of values corresponding to each feature, using ```pandas.iloc()```
 3. Create a list of values corresponding to the class label the same way
 4. Calculate the Pearson correlation coefficient between each feature and the class label
