@@ -35,9 +35,9 @@
     - ~~extra tree classifier (shortest learning time)~~
     - ~~bagging classifier~~
 2. Create a subset of the dataset, which we'll call D_ifs, where any features deemed irrelevant by IFS are filtered out
-3. For 1 <= k <= N, where k now represents the number of folds:
-    - Select 1/kth of D_ifs
-    - Train model (binary classification) with 75% of that 1/kth portion of data
-    - Obtain values of hyperparameters: F1 score (try using their newly proposed F1 scoring method -- obtain F1 score directly while model is training, store value of confusion matrix) and elapsed time
-    - Test model with the other 25%
+3. ~~For 1 <= k <= N, where k now represents the number of folds:~~
+    - ~~Select 1/kth of D_ifs~~
+    - ~~Train model (binary classification) with 75% of that 1/kth portion of data~~
+    - ~~Obtain values of hyperparameters: F1 score (try using their newly proposed F1 scoring method -- obtain F1 score directly while model is training, store value of confusion matrix) and elapsed time~~
+    - ~~Test model with the other 25%~~
 4. Generate ROC curve to evaluate experimental results
