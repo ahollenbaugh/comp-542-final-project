@@ -4,7 +4,7 @@
 2. ~~Create a list of values corresponding to each feature, using ```pandas.iloc()```~~
 3. ~~Create a list of values corresponding to the class label the same way~~
 4. ~~Calculate the Pearson correlation coefficient between each feature and the class label~~
-5. Sort the absolute value of the coefficients in descending order
+5. ~~Sort the absolute value of the coefficients in descending order~~
 6. For 1 <= j <= N, where N = the number of features, create a set C_j containing:
     - j features
     - the class label
