@@ -3,6 +3,7 @@ from sklearn.feature_selection import r_regression
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.metrics import f1_score
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import MinMaxScaler
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -27,5 +28,11 @@ clf = DecisionTreeClassifier()
 clf.fit(X, y)
 IG = clf.feature_importances_
 print(IG)
+
+# Scale the data:
+scaler = MinMaxScaler()
+scaler.fit(X)
+X_scaled = scaler.transform(X)
+print(X_scaled)
 
 print("all done!")
