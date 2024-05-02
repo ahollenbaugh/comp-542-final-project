@@ -5,9 +5,9 @@
 3. ~~Create a list of values corresponding to the class label the same way~~
 4. ~~Calculate the Pearson correlation coefficient between each feature and the class label~~
 5. ~~Sort the absolute value of the coefficients in descending order~~
-6. Choose the top j features from that list. Like, just choose an arbitrary value of j. For 0 <= i < j, create "j choose i" combinations of features
-7. For each set C_j, calculate the F1 score
-8. Select the set C_j* with the highest F1 score
+6. ~~Choose the top j features from that list. Like, just choose an arbitrary value of j. For 0 <= i < j, create "j choose i" combinations of features.~~
+7. ~~For each set C_j, calculate the F1 score~~
+8. ~~Select the set C_j* with the highest F1 score~~
 9. ~~Calculate the entropy of each feature~~
 10. Figure out the chi-squared distribution
 11. Select the top 20% of features

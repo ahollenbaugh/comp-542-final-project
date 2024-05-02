@@ -23,29 +23,29 @@ pearson_correlation_coefficients = r_regression(X, y)
 features = dataset.columns[:-1]
 correlation_df = pandas.DataFrame({'Feature': features, 'Correlation': pearson_correlation_coefficients})
 sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
-print(sorted_df)
+# print(sorted_df)
 
 # Generate different sets/combinations of features and calculate the F1 score:
-j = 5 # CAREFUL! Make sure j doesn't exceed the number of features!
+j = 7 # CAREFUL! Make sure j doesn't exceed the number of features!
 test_size = 0.25
 feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X, y, j, test_size)
-print(f"This set of features has the highest f1 score: {feature_subset_highest_f1}")
+print(f"This set of features has the highest f1 score: {dataset.columns[feature_subset_highest_f1]}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
 clf.fit(X, y)
 IG = clf.feature_importances_
-print(IG)
+# print(IG)
 
 # Scale the data:
 scaler = MinMaxScaler()
 scaler.fit(X)
 X_scaled = scaler.transform(X)
-print(X_scaled)
+# print(X_scaled)
 
 # Cross-validation:
 rfc = RandomForestClassifier()
 result = cross_validate(rfc, X_scaled, y)
-print(result['test_score'])
+# print(result['test_score'])
 
 print("all done!")
