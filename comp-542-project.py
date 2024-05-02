@@ -30,12 +30,15 @@ sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
 j = 7 # CAREFUL! Make sure j doesn't exceed the number of features!
 # 1. Grab the first j feature names from sorted_df and put them in a list.
 top_j_feature_names = list(sorted_df.iloc[0:j+1, 0])
-print(top_j_feature_names)
+# print(top_j_feature_names)
 # 2. Create a copy of dataset only containing said columns.
-# 3. Run f1 function on copy of dataset.
+dataset_top_j_features = dataset[top_j_feature_names]
+# 3. Make a new version of X.
+X_top_j = dataset_top_j_features.iloc[:, :-1].values
+# 4. Run f1 function on copy of dataset.
 test_size = 0.25
-feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X, y, j, test_size)
-# print(f"This set of features has the highest f1 score: {dataset.columns[feature_subset_highest_f1]}")
+feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X_top_j, y, j, test_size)
+# print(f"This set of features has the highest f1 score: {dataset_top_j_features.columns[feature_subset_highest_f1]}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
