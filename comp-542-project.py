@@ -5,6 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import cross_validate
 import f1_combinations as f1
+from sklearn.model_selection import train_test_split
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -69,8 +70,41 @@ X_scaled = scaler.transform(X)
 # print(X_scaled)
 
 # Cross-validation:
+# rfc = RandomForestClassifier()
+# result = cross_validate(rfc, X_scaled, y)
+# print(result['test_score'])
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)  # Set random_state for reproducibility
+
+# Train a classifier (e.g., RandomForestClassifier)
 rfc = RandomForestClassifier()
-result = cross_validate(rfc, X_scaled, y)
-print(result['test_score'])
+rfc.fit(X_train, y_train)
+
+# Make predictions on the testing set
+y_pred = rfc.predict(X_test)
+
+# Calculate ROC curve metrics using scikit-learn
+from sklearn.metrics import roc_curve, auc
+
+# Compute ROC curve and AUC score
+fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+roc_auc = auc(fpr, tpr)
+
+# Print AUC score
+print(f"AUC score: {roc_auc}")
+
+# Plot the ROC curve (optional)
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, label='ROC curve (area = %0.2f)' % roc_auc)
+plt.plot([0, 1], [0, 1], 'k--', label='No Skill')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate (FPR)')
+plt.ylabel('True Positive Rate (TPR)')
+plt.title('ROC Curve - Diabetes Classification')
+plt.legend(loc="lower right")
+plt.grid(True)
+plt.show()
 
 print("all done!")
