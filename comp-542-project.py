@@ -25,7 +25,7 @@ sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
 # print(sorted_df)
 
 # Generate different sets/combinations of features and calculate the F1 score:
-j = 7 # CAREFUL! Make sure j doesn't exceed the number of features!
+j = 4 # CAREFUL! Make sure j doesn't exceed the number of features!
 # 1. Grab the first j feature names from sorted_df and put them in a list.
 top_j_feature_names = list(sorted_df.iloc[0:j+1, 0])
 # print(top_j_feature_names)
@@ -48,12 +48,16 @@ info_gain_df = pandas.DataFrame({'Feature': features, 'IG': IG})
 # 2. Sort dataframe by IG in descending order.
 sorted_info_gain_df = info_gain_df.sort_values(by='IG', ascending=False)
 # 3. Generate different sets/combinations of features and calculate the F1 score:
-k = 7
+k = 4
 top_k_feature_names = list(sorted_info_gain_df.iloc[0:k+1, 0])
 dataset_top_k_features = dataset[top_k_feature_names]
 X_top_k = dataset_top_k_features.iloc[:, :-1].values
 feature_subset_highest_f1_IG = f1.calculate_f1_scores_on_subsets(X_top_k, y, k, test_size)
-print(f"This set of features has the highest f1 score: {dataset_top_k_features.columns[feature_subset_highest_f1_IG]}")
+# print(f"This set of features has the highest f1 score: {dataset_top_k_features.columns[feature_subset_highest_f1_IG]}")
+
+# Take the union of the two sets of features.
+selected_features = set(feature_subset_highest_f1).union(set(feature_subset_highest_f1_IG))
+# print(f"selected features: {selected_features}")
 
 # Scale the data:
 scaler = MinMaxScaler()
@@ -64,6 +68,6 @@ X_scaled = scaler.transform(X)
 # Cross-validation:
 rfc = RandomForestClassifier()
 result = cross_validate(rfc, X_scaled, y)
-# print(result['test_score'])
+print(result['test_score'])
 
 print("all done!")
