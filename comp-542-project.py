@@ -8,10 +8,12 @@ from sklearn.model_selection import cross_validate
 from sklearn.preprocessing import LabelEncoder
 from scipy.stats import pearsonr
 
-# Read in and process the dataset file:
-#dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
+import f1_combinations as f1
 
-dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\diabetes.csv", sep=',')
+# Read in and process the dataset file:
+dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
+
+#dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\diabetes.csv", sep=',')
 
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\Data Sets\\diabetes.csv", sep=',')
@@ -40,6 +42,12 @@ sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
 
 print("\nSorted DataFrame:")
 print(sorted_df)
+
+# Generate different sets/combinations of features and calculate the F1 score:
+j = 9   # Arbitrary; take the highest j number of features. CAREFUL! j cannot exceed the number of features of the dataset
+test_size = 0.25
+feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X, y, j, test_size)
+print(f"This set of features has the highest f1 score: {feature_subset_highest_f1}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
