@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import cross_validate
+import f1_combinations as f1
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -23,6 +24,12 @@ features = dataset.columns[:-1]
 correlation_df = pandas.DataFrame({'Feature': features, 'Correlation': pearson_correlation_coefficients})
 sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
 print(sorted_df)
+
+# Generate different sets/combinations of features and calculate the F1 score:
+j = 20
+test_size = 0.25
+feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X, y, j, test_size)
+print(f"This set of features has the highest f1 score: {feature_subset_highest_f1.columns[:-1]}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
