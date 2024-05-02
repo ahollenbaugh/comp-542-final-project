@@ -1,12 +1,10 @@
 import pandas
 from sklearn.feature_selection import r_regression
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import f1_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import cross_validate
 import f1_combinations as f1
-from sklearn.feature_selection import chi2
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -45,7 +43,17 @@ clf = DecisionTreeClassifier()
 clf.fit(X, y)
 IG = clf.feature_importances_
 # print(f"information gain results: {IG}")
-chi2_stats, p_values = chi2(X, y)
+# 1. Create a dataframe containing features and their IG values.
+info_gain_df = pandas.DataFrame({'Feature': features, 'IG': IG})
+# 2. Sort dataframe by IG in descending order.
+sorted_info_gain_df = info_gain_df.sort_values(by='IG', ascending=False)
+# 3. Generate different sets/combinations of features and calculate the F1 score:
+k = 7
+top_k_feature_names = list(sorted_info_gain_df.iloc[0:k+1, 0])
+dataset_top_k_features = dataset[top_k_feature_names]
+X_top_k = dataset_top_k_features.iloc[:, :-1].values
+feature_subset_highest_f1_IG = f1.calculate_f1_scores_on_subsets(X_top_k, y, k, test_size)
+print(f"This set of features has the highest f1 score: {dataset_top_k_features.columns[feature_subset_highest_f1_IG]}")
 
 # Scale the data:
 scaler = MinMaxScaler()
