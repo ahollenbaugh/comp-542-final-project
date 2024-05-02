@@ -8,7 +8,8 @@ def calculate_f1_scores_on_subsets(X, y, j, test_size):
   best_feature_subset = None
   for i in range(1, j+1):  # Iterate through 0 to j features
     for feature_subset in combinations(range(j), i):  # Generate all "j choose i" subsets
-      X_subset = X[:, feature_subset[:-1]]  # Select features based on subset indices
+      print(f"feature_subset = {feature_subset}")
+      X_subset = X[:, list(feature_subset)]  # Select features based on subset indices
       if not X_subset.any():
           continue
       X_train, X_test, y_train, y_test = train_test_split(X_subset, y, test_size=test_size, random_state=42)

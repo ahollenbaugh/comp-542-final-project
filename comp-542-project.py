@@ -26,10 +26,10 @@ sorted_df = correlation_df.sort_values(by='Correlation', ascending=False)
 print(sorted_df)
 
 # Generate different sets/combinations of features and calculate the F1 score:
-j = 20
+j = 5 # CAREFUL! Make sure j doesn't exceed the number of features!
 test_size = 0.25
 feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X, y, j, test_size)
-print(f"This set of features has the highest f1 score: {feature_subset_highest_f1.columns[:-1]}")
+print(f"This set of features has the highest f1 score: {feature_subset_highest_f1}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
