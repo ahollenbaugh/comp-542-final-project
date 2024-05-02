@@ -59,6 +59,9 @@ feature_subset_highest_f1_IG = f1.calculate_f1_scores_on_subsets(X_top_k, y, k, 
 selected_features = set(feature_subset_highest_f1).union(set(feature_subset_highest_f1_IG))
 # print(f"selected features: {selected_features}")
 
+X = X[:, list(selected_features)]
+print(X)
+
 # Scale the data:
 scaler = MinMaxScaler()
 scaler.fit(X)
