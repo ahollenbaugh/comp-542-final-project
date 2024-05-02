@@ -9,7 +9,7 @@
 7. ~~For each set C_j, calculate the F1 score~~
 8. ~~Select the set C_j* with the highest F1 score~~
 9. ~~Calculate the entropy of each feature~~
-10. Figure out the chi-squared distribution
+10. ~~Figure out the chi-squared distribution~~
 11. Select the top 20% of features
 12. For 1 <= k <= N, create a set C_k containing:
     - k features
