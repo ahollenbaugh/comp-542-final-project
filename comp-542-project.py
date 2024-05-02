@@ -6,6 +6,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import cross_validate
 import f1_combinations as f1
+from sklearn.feature_selection import chi2
 
 # Read in and process the dataset file:
 # dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
@@ -35,7 +36,8 @@ print(f"This set of features has the highest f1 score: {dataset.columns[feature_
 clf = DecisionTreeClassifier()
 clf.fit(X, y)
 IG = clf.feature_importances_
-# print(IG)
+# print(f"information gain results: {IG}")
+chi2_stats, p_values = chi2(X, y)
 
 # Scale the data:
 scaler = MinMaxScaler()
