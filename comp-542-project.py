@@ -37,7 +37,7 @@ X_top_j = dataset_top_j_features.iloc[:, :-1].values
 # 4. Run f1 function on copy of dataset.
 test_size = 0.25
 feature_subset_highest_f1 = f1.calculate_f1_scores_on_subsets(X_top_j, y, j, test_size)
-# print(f"This set of features has the highest f1 score: {dataset_top_j_features.columns[feature_subset_highest_f1]}")
+print(f"This first set of features has the highest f1 score: {dataset_top_j_features.columns[feature_subset_highest_f1]}")
 
 # Get information gain for each feature:
 clf = DecisionTreeClassifier()
@@ -54,14 +54,14 @@ top_k_feature_names = list(sorted_info_gain_df.iloc[0:k+1, 0])
 dataset_top_k_features = dataset[top_k_feature_names]
 X_top_k = dataset_top_k_features.iloc[:, :-1].values
 feature_subset_highest_f1_IG = f1.calculate_f1_scores_on_subsets(X_top_k, y, k, test_size)
-# print(f"This set of features has the highest f1 score: {dataset_top_k_features.columns[feature_subset_highest_f1_IG]}")
+print(f"This second set of features has the highest f1 score: {dataset_top_k_features.columns[feature_subset_highest_f1_IG]}")
 
 # Take the union of the two sets of features.
 selected_features = set(feature_subset_highest_f1).union(set(feature_subset_highest_f1_IG))
 # print(f"selected features: {selected_features}")
 
 X = X[:, list(selected_features)]
-print(X)
+# print(X)
 
 # Scale the data:
 scaler = MinMaxScaler()
@@ -78,6 +78,8 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, 
 # Train a classifier (e.g., RandomForestClassifier)
 rfc = RandomForestClassifier()
 rfc.fit(X_train, y_train)
+result = cross_validate(rfc, X_scaled, y)
+# print(f"result = {result[]}")
 
 # Make predictions on the testing set
 y_pred = rfc.predict(X_test)
