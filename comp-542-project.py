@@ -3,7 +3,6 @@ import pandas as pd
 import time
 from sklearn.feature_selection import r_regression
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import f1_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import cross_validate
@@ -19,11 +18,7 @@ start_time = time.time()
 
 # Read in and process the dataset file:
 dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
-
-#dataset = pd.read_csv("C:\\Users\\wjona\\OneDrive\\Documents\\CSUN\\Comp542\\diabetes.csv", sep=',')
-
-# dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
-# dataset = pandas.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\Data Sets\\diabetes.csv", sep=',')
+# dataset = pd.read_csv("C:\\Users\\aghol\\OneDrive\\Desktop\\COMP 542\\AndroidAdware2017\\TotalFeatures-ISCXFlowMeter.csv", sep=',')
 
 dataset = dataset.dropna(axis=0, how='any', subset=None, inplace=False)
 
@@ -31,17 +26,22 @@ dataset = dataset.dropna(axis=0, how='any', subset=None, inplace=False)
 X = dataset.iloc[:, :-1].values # observations/training examples without class label (final column)
 y = dataset.iloc[:, -1].values # class label for each observation
 
-# Encode class labels to numerical values
-label_encoder = LabelEncoder()
-# y = label_encoder.fit_transform(y) - this encoding works until we want the actual score at the end
+'''
+In order to use binary classification, we need to map the class label to
+some binary value.
 
-y = pd.get_dummies(y)   # Do we need to hardcode in that adware and malware need to be assigned the same? 
+In this case, we're mapping adware and GeneralMalware to True,
+and benign to False.
+'''
+# Convert y to Series for replace
+y_temp = pd.Series(y)
+y_temp = y_temp.replace({'benign': 0, 'adware': 1, 'GeneralMalware': 1})
 
-print("One-hot encoded target variable:")
+# Convert back to NumPy array
+y = y_temp.to_numpy()
 print(y)
 
 # Calculate the Pearson correlation coefficient between features and class:
-# pearson_correlation_coefficients = r_regression(X, y)
 pearson_correlation_coefficients = [pearsonr(X[:, i], y)[0] for i in range(X.shape[1])]
 
 print("Pearson correlation coefficients:", pearson_correlation_coefficients[0]) # print coefficients
@@ -91,7 +91,7 @@ sorted_info_gain_df = info_gain_df.sort_values(by='IG', ascending=False)
 # ********** NEW CHECKPOINT ************ -- Runtime = 133 seconds up to this point
 
 # 3. Generate different sets/combinations of features and calculate the F1 score:
-k = 4
+k = 6
 top_k_feature_names = list(sorted_info_gain_df.iloc[0:k+1, 0])
 dataset_top_k_features = dataset[top_k_feature_names]
 X_top_k = dataset_top_k_features.iloc[:, :-1].values
@@ -157,7 +157,7 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate (FPR)')
 plt.ylabel('True Positive Rate (TPR)')
-plt.title('ROC Curve - Diabetes Classification')
+plt.title('ROC Curve - Android App Classification')
 plt.legend(loc="lower right")
 plt.grid(True)
 plt.show()
